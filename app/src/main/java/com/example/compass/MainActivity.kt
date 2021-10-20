@@ -1,6 +1,7 @@
 package com.example.compass
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -39,6 +40,9 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //Service
+        //var intent = Intent(this,NotificationService::class.java)
+
         //compass fields
         degreeTextView = binding.upperTextView
         dinamicView = binding.dinamicView
@@ -65,7 +69,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         locationCallback = object : LocationCallback(){
 
             override fun onLocationResult(p0: LocationResult?) {
-                var location = p0!!.locations[p0.locations.size-1] //last location
+                val location = p0!!.locations[p0.locations.size-1] //last location
                 locationTextView = binding.locationTextView
                 locationTextView.text = location.latitude.toString()+"/"+location.longitude.toString()
             }
@@ -83,10 +87,16 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     override fun onResume() {
         super.onResume()
         manager?.registerListener(this, manager?.getDefaultSensor(Sensor.TYPE_ORIENTATION),SensorManager.SENSOR_DELAY_GAME)
+
+        //Service
+        stopService(Intent(this,NotificationService::class.java))
     }
     override fun onPause() {
         super.onPause()
         manager?.unregisterListener(this)
+
+        //Service
+        startService(Intent(this,NotificationService::class.java))
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
