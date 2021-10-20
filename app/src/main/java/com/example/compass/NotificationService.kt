@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.IBinder
-import android.widget.RemoteViews
 
 class NotificationService : Service() {
 
@@ -13,7 +12,7 @@ class NotificationService : Service() {
     lateinit var notificationChannel: NotificationChannel
     lateinit var builder: Notification.Builder
     private val channelId = "i.apps.notifications"
-    private val description = "Test notification"
+    private val description = "It's time to check your position!"
 
     override fun onBind(intent: Intent): IBinder? {
         return null
@@ -25,8 +24,8 @@ class NotificationService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        //pause
-        Thread.sleep(10000)
+        //waiting 5 minutes
+        Thread.sleep(300000)
         //sending notification
         sendNotification()
         return super.onStartCommand(intent, flags, startId)
