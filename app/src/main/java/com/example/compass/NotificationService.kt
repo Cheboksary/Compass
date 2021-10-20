@@ -33,7 +33,6 @@ class NotificationService : Service() {
     }
 
     private fun sendNotification() {
-        //ПРОВЕРИТЬ!!!!
         val intent = Intent(this, MainActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
